@@ -1,0 +1,36 @@
+server:
+  port: 80
+  context-path: /
+  ssl:
+    enabled: false
+  jetty:
+    max-http-post-size: 2097152
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none #create|update|create-drop|validate
+      naming:
+        physical-strategy: com.wd.pub.datatools.config.PrimaryImprovedNamingStrategy
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    primary:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.1.130:3306/journal
+      username: root
+      password: weidu1314
+    secondary:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.1.107:3306/journal_navication
+      username: root
+      password: root
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.1.75:8300,192.168.1.76:8300,192.168.1.77:8300,192.168.1.78:8300
+      cluster-name: wdkj_test
+elasticsearch:
+  rest:
+    client:
+      user: bse
+      passwd: bse#@!
+      cluster-nodes: 192.168.1.75:8200,192.168.1.76:8200,192.168.1.77:8200,192.168.1.78:8200
