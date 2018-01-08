@@ -16,6 +16,6 @@ public class JournalIndexController {
 
     @GetMapping("/journal/addStatus")
     public String addJournalStatus(){
-        return journalIndexService.addJournalIndexStatus();
+        return journalIndexService.updateJournalIndexStatus();
     }
 }

@@ -31,6 +31,9 @@ public class EsClientConfig implements FactoryBean<TransportClient>, Initializin
     @Value("${spring.data.elasticsearch.cluster-name}")
     private String clusterName;
 
+    @Value("${spring.data.elasticsearch.client-transport-sniff}")
+    private String clientTransportSniff;
+
     private TransportClient client;
 
     @Override
@@ -89,9 +92,8 @@ public class EsClientConfig implements FactoryBean<TransportClient>, Initializin
     private Settings settings(){
         Settings settings = Settings.builder()
                 .put("cluster.name",clusterName)
-                .put("client.transport.sniff",true)
+                .put("client.transport.sniff",clientTransportSniff)
                 .build();
-        client = new PreBuiltTransportClient(settings);
         return settings;
     }
 }

@@ -11,23 +11,28 @@ spring:
     hibernate:
       ddl-auto: none #create|update|create-drop|validate
       naming:
-        physical-strategy: com.wd.pub.datatools.config.PrimaryImprovedNamingStrategy
+        physical-strategy: com.wd.pub.datatools.config.NoneNamingStrategy
     database-platform: org.hibernate.dialect.MySQL5Dialect
   datasource:
     primary:
-      driverClassName: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://192.168.1.130:3306/journal
       username: root
       password: weidu1314
     secondary:
-      driverClassName: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://192.168.1.107:3306/journal_navication
       username: root
       password: root
   data:
     elasticsearch:
-      cluster-nodes: 192.168.1.75:8300,192.168.1.76:8300,192.168.1.77:8300,192.168.1.78:8300
-      cluster-name: wdkj_test
+      # 192.168.1.75:8300,192.168.1.76:8300,192.168.1.77:8300,192.168.1.78:8300
+      cluster-nodes: 192.168.1.11:8300
+      # wdkj_test
+      cluster-name: wdkj
+      client-transport-sniff: false
+    mongodb:
+      uri: mongodb://192.168.1.80:27017/journal_source
 elasticsearch:
   rest:
     client:

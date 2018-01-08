@@ -5,5 +5,5 @@ package com.wd.pub.datatools.service;
  */
 public interface JournalIndexService {
 
-    public String addJournalIndexStatus();
+    public String updateJournalIndexStatus();
 }

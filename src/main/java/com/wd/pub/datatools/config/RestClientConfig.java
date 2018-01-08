@@ -89,8 +89,9 @@ public class RestClientConfig {
                 httpHosts[i] = new HttpHost(Address, port, "http");
             }
             RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
-            restClient = buildAuthentication(restClientBuilder).build();
-            sniffer = Sniffer.builder(restClient).build();
+            restClient = restClientBuilder.build();
+            //restClient = buildAuthentication(restClientBuilder).build();
+            //sniffer = Sniffer.builder(restClient).build();
         }
         return restClient;
     }
