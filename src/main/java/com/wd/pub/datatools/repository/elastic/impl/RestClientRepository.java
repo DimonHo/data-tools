@@ -2,30 +2,18 @@ package com.wd.pub.datatools.repository.elastic.impl;
 
 import com.wd.pub.datatools.module.ResultModule;
 import com.wd.pub.datatools.repository.elastic.ElasticRepository;
-import com.wd.pub.datatools.utils.CollectionUtils;
 import com.wd.pub.datatools.utils.RestClientRequestUtils;
 import com.wd.pub.datatools.utils.RestClientUrlUtils;
 import com.wd.pub.datatools.utils.ResultUtils;
-import com.xiaoleilu.hutool.io.IoUtil;
-import com.xiaoleilu.hutool.json.JSON;
 import com.xiaoleilu.hutool.json.JSONObject;
-import com.xiaoleilu.hutool.json.JSONUtil;
 import com.xiaoleilu.hutool.lang.Console;
-import com.xiaoleilu.hutool.util.ThreadUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.ContentType;
-import org.apache.http.nio.entity.NStringEntity;
-import org.apache.http.util.EntityUtils;
 import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.Response;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -125,6 +113,28 @@ public class RestClientRepository implements ElasticRepository {
         return ResultUtils.success(respJson);
     }
 
+    @Override
+    public ResultModule createIndex(String index) {
+        return null;
+    }
+
+    @Override
+    public ResultModule createIndex(String index, Settings settings) {
+        return null;
+    }
+
+    @Override
+    public ResultModule createIndex(String index, String type, Map<String, Object> mapping) {
+        return null;
+    }
+
+    @Override
+    public ResultModule createIndex(String index, String type, Settings settings, Map<String, Object> mapping) {
+        return null;
+    }
+
+
+    @Override
     public ResultModule<JSONObject> matchAll(String index, String type) {
         return httpSearch(index, type, "{\"query\":{\"match_all\":{}}}");
     }

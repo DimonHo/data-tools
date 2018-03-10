@@ -19,11 +19,13 @@ spring:
       url: jdbc:mysql://192.168.1.130:3306/journal
       username: root
       password: weidu1314
+      default-auto-commit: true
     secondary:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://192.168.1.107:3306/journal_navication
       username: root
       password: root
+      default-auto-commit: true
   data:
     elasticsearch:
       # 192.168.1.75:8300,192.168.1.76:8300,192.168.1.77:8300,192.168.1.78:8300
@@ -39,3 +41,10 @@ elasticsearch:
       user: bse
       passwd: bse#@!
       cluster-nodes: 192.168.1.75:8200,192.168.1.76:8200,192.168.1.77:8200,192.168.1.78:8200
+spark:
+  mongo:
+    session:
+      master: local
+      app-name: MongoSparkConnectorIntro
+      input-uri: mongodb://192.168.1.80:27017/journal_source.testin
+      output-uri: mongodb://192.168.1.80:27017/journal_source.testout

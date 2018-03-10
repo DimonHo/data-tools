@@ -4,12 +4,15 @@ import com.wd.pub.datatools.module.ResultModule;
 import com.wd.pub.datatools.repository.elastic.ElasticRepository;
 import com.wd.pub.datatools.utils.ResultUtils;
 import org.elasticsearch.action.DocWriteRequest;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.engine.DocumentMissingException;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -35,11 +38,44 @@ public class TransportRepository implements ElasticRepository{
 
     private static final Logger log = LoggerFactory.getLogger(TransportRepository.class);
 
+    private static final Settings DEFAULT_SETTINGS = Settings.builder()
+            .put()
+            .build();
+
     @Autowired
     TransportClient client;
 
     public TransportClient getClient() {
         return client;
+    }
+
+    @Override
+    public ResultModule createIndex(String index){
+        return createIndex(index,null,null,null);
+    }
+
+    @Override
+    public ResultModule createIndex(String index, Settings settings){
+        return createIndex(index,null,settings,null);
+    }
+
+    @Override
+    public ResultModule createIndex(String index, String type,Map<String,Object> mapping){
+        return createIndex(index,type,null,mapping);
+    }
+
+    @Override
+    public ResultModule createIndex(String index, String type, Settings settings, Map<String, Object> mapping) {
+        CreateIndexRequest createIndexRequest = new CreateIndexRequest();
+        createIndexRequest.index(index);
+        if (settings != null){
+            createIndexRequest.settings(settings);
+        }
+        if (mapping != null){
+            createIndexRequest.mapping(type,mapping);
+        }
+        CreateIndexResponse response = client.admin().indices().create(createIndexRequest).actionGet(2000);
+        return ResultUtils.success(response);
     }
 
     @Override
@@ -134,7 +170,7 @@ public class TransportRepository implements ElasticRepository{
     @Override
     public ResultModule<SearchResponse> scrollByQueryReFields(String index, String type, QueryBuilder queryBuilder, String[] returnFields, int batchSize) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(queryBuilder).fetchSource(returnFields, null);//仅返回keywords字段
+        searchSourceBuilder.query(queryBuilder).fetchSource(returnFields, null);
         searchSourceBuilder.size(batchSize);
         SearchResponse response = client.prepareSearch(index).setTypes(type)
                 .addSort(FieldSortBuilder.DOC_FIELD_NAME, SortOrder.ASC)

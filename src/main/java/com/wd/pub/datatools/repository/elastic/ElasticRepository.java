@@ -5,6 +5,8 @@ import com.wd.pub.datatools.module.ResultModule;
 import com.xiaoleilu.hutool.json.JSONObject;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.common.settings.Setting;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 
@@ -15,6 +17,38 @@ import java.util.Map;
  * Created by DimonHo on 2018/1/4.
  */
 public interface ElasticRepository {
+
+    /**
+     * 创建索引
+     * @param index
+     * @return
+     */
+    ResultModule createIndex(String index);
+
+    /**
+     * 创建索引
+     * @param index
+     * @param settings
+     * @return
+     */
+    ResultModule createIndex(String index, Settings settings);
+
+    /**
+     * 创建索引
+     * @param index
+     * @param type
+     * @param mapping
+     * @return
+     */
+    ResultModule createIndex(String index, String type,Map<String,Object> mapping);
+
+    /**
+     * 创建索引
+     * @param index
+     * @param type
+     * @return
+     */
+    ResultModule createIndex(String index, String type, Settings settings, Map<String,Object> mapping);
 
     /**
      * matchAll查询
